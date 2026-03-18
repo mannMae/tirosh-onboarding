@@ -15,6 +15,7 @@ jobs:
 
       - name: Install dependencies
         run: uv sync
+        working-directory: my-service
 
       - name: Build package
         run: uv build
