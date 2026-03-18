@@ -19,3 +19,4 @@ jobs:
 
       - name: Build package
         run: uv build
+        working-directory: my-service
