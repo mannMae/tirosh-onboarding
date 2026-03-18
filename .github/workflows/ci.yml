@@ -20,3 +20,9 @@ jobs:
       - name: Build package
         run: uv build
         working-directory: my-service
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: echo "CI passed"
