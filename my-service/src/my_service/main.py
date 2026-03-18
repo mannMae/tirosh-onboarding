@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from typing import Dict, List
+import uvicorn
 
 app = FastAPI(title="My Service")
 
@@ -17,3 +18,7 @@ def get_items() -> List[Dict[str, str | int]]:
 @app.get("/")
 def read_root():
     return {"message": "Welcome to My Service"}
+
+
+def main():
+    uvicorn.run("my_service.main:app",host="0.0.0.0",port=8000)
