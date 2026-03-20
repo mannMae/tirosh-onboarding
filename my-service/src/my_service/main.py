@@ -1,7 +1,9 @@
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Request, Response
+from prometheus_client import generate_latest
 from typing import Dict, List
 import uvicorn
 from my_service.logger import logger
+from my_service.metrics import request_counter
 
 app = FastAPI(title="My Service")
 
@@ -20,6 +22,7 @@ async def add_logging_context(request: Request, call_next):
 @app.get("/health")
 def health_check(request: Request) -> Dict[str, str]:
     logger.info("health endpoint called", extra={"path": request.url.path, "method": request.method})
+    request_counter.labels(path="/health").inc()
     return {"status": "ok"}
 
 @app.get("/items")
@@ -28,6 +31,10 @@ def get_items() -> List[Dict[str, str | int]]:
         {"id": 1, "name": "Item A", "description": "This is item A"},
         {"id": 2, "name": "Item B", "description": "This is item B"},
     ]
+
+@app.get("/metrics")
+def metrics():
+    return Response(generate_latest(), media_type="text/plain")
 
 @app.get("/")
 def read_root():
