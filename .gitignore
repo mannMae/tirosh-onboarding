@@ -1,0 +1,19 @@
+# --- Python 관련 ---
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+.pytest_cache/
+.python-version
+build/
+dist/
+*.egg-info/
+
+# --- 로그 및 환경 설정 ---
+*.log
+.env
+
+# --- OS 및 에디터 관련 ---
+.DS_Store
+.vscode/
+.idea/
