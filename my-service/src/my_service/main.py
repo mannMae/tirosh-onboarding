@@ -1,11 +1,17 @@
+from dotenv import load_dotenv
+
 from fastapi import FastAPI, Request, Response
 from prometheus_client import generate_latest
 from typing import Dict, List
 import uvicorn
 from my_service.logger import logger
 from my_service.metrics import request_counter
+from my_service.tracing import setup_tracing
+
+load_dotenv()
 
 app = FastAPI(title="My Service")
+setup_tracing(app)
 
 @app.middleware("http")
 async def add_logging_context(request: Request, call_next):
